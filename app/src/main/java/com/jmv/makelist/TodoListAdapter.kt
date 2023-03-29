@@ -4,9 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class TodoListAdapter : RecyclerView.Adapter<TodoListViewHolder>() {
+class TodoListAdapter(val lists: ArrayList<TaskList>)  : RecyclerView.Adapter<TodoListViewHolder>() {
 
-    private val todoLists = arrayOf("Android Development", "House Work", "Errands", "Shopping")
+    private val todoLists = mutableListOf("Android Development", "House Work", "Errands", "Shopping")
+
+    fun addNewItem(listName: String = "") {
+        if (listName.isEmpty()) {
+            todoLists.add("Todo List " + (todoLists.size + 1))
+        } else {
+            todoLists.add(listName)
+        }
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -24,15 +33,24 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return todoLists.size
+   //     return todoLists.size
+        return lists.size
     }
 
     //binding the data
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {
 
         holder.listPositionTextView.text = (position + 1).toString()
-        holder.listTitleTextView.text = todoLists[position]
+       // holder.listTitleTextView.text = todoLists[position]
+        holder.listTitleTextView.text = lists[position].name
 
+    }
+
+    fun addList(list: TaskList) {
+        lists.add(list)
+        //you can either reload the data or let the recycler view know that an item has been inserted
+        //position of insert - last item in the list
+        notifyItemInserted(lists.size-1)
     }
 
 }
