@@ -4,7 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class TodoListAdapter(val lists: ArrayList<TaskList>)  : RecyclerView.Adapter<TodoListViewHolder>() {
+class TodoListAdapter(val lists: ArrayList<TaskList>, val clickListener: TodoListClickListener)  : RecyclerView.Adapter<TodoListViewHolder>() {
+
+    interface TodoListClickListener {
+        fun listItemClicked(list: TaskList)
+    }
 
     private val todoLists = mutableListOf("Android Development", "House Work", "Errands", "Shopping")
 
@@ -37,12 +41,18 @@ class TodoListAdapter(val lists: ArrayList<TaskList>)  : RecyclerView.Adapter<To
         return lists.size
     }
 
-    //binding the data
+    //Edit onBindViewHolder to add an OnClickListener to the view.
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {
 
         holder.listPositionTextView.text = (position + 1).toString()
        // holder.listTitleTextView.text = todoLists[position]
         holder.listTitleTextView.text = lists[position].name
+
+        //access the itemView on the ViewHolder, and set an OnClickListener
+        holder.itemView.setOnClickListener {
+            //pass in the current list that was clicked
+            clickListener.listItemClicked(lists[position])
+        }
 
     }
 

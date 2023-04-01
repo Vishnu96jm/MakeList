@@ -11,10 +11,26 @@
         android:theme="@style/Theme.MakeList"
         tools:targetApi="31">
         <activity
+            android:name=".DetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MakeList.NoActionBar">
+
+            <!--
+            The main action indicates that this is the activity presented
+            when your app is launched.
+
+            The category tag is the launcher indicating that the activity is
+            the entry point and should  be shown in the application launcher.
+            -->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,3 +40,36 @@
     </application>
 
 </manifest>
+    <!--An intent is an object that can request an action from another component.
+    You can use intents to launch other activities, you can use them to respond to incoming emails
+    or use them to broadcast a message across the Android system, that way other apps can respond.
+
+    There are two types of intents
+    1. implicit intents - lets the system determine the response. For instance, imagine your app
+    downloads a PDF and you provide an option for the viewer to view it. Instead of writing your
+    own PDF rendering activity, you can instead opt to use an implicit intent. When the user taps on
+    the PDF to view it the system can search for any apps that respond to the intent.
+
+    2. Explicit intent - states the exact resource that handles the action, whereas the implicit
+    intent leaves it up to the system and thus the user. For eg, you may have a street address that renders
+    fine in Google maps but messes up other mapping applications. By using an explicit intent you dictate
+    that Google Maps is used to open the address.
+
+    Typically, you'll use intents to launch your own activities or you can use them to download a file
+    in the background.
+
+    /*You may be wondering, how does Android know what kinds of messages your app responds to? That is
+    handled by intent-filters declared in your app manifest file. The intent filter specifies the action,
+    data and category for your activity.
+
+    The action is the intent action accepted. This could be a standard action or you could define your own.
+    For eg, if you wanted your activity to respond to email composing, you could set the action to
+    android.intent.action.SEND. The Android official documentation provides a large list of standard events.
+
+    The category determines what kind of component responds to your intent. For instance, you may have
+    a text file that contains html. You could have a web browser view it or a text editor edit it. By
+    providing the category it determines the type of activity used to view it. If you want to view the
+    file in a web browser, you'd set the category to category_browseable. The intent class provides all
+    the standard activities. When adding categories, you add multiple categories if necessary. Some intents
+    declare a data. The data determines the type of data that your activity accepts. For eg, if your activity
+    works with text files, you can set the data to be text / plain.-->
