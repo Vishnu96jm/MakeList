@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), TodoListAdapter.TodoListClickListener 
         val taskListItem = Intent(this, DetailActivity::class.java)
         /*TaskList isn't supported by putExtra. Implement Parcelable interface in your objects*/
         taskListItem.putExtra(INTENT_LIST_KEY, list)
-        startActivity(taskListItem)
+     //   startActivity(taskListItem)
 
         /*startActivityForResult starts your DetailActivity as intended, however, it adds the
         * expectation that the MainActivity will hear back from the DetailActivity. The second
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity(), TodoListAdapter.TodoListClickListener 
         *
         * You could be dealing with multiple activities that are passing back multiple results. So,
         * having a unique way to be able to identify results is helpful.*/
-        // startActivityForResult(taskListItem, LIST_DETAIL_REQUEST_CODE)
+         startActivityForResult(taskListItem, LIST_DETAIL_REQUEST_CODE)
     }
 
     override fun listItemClicked(list: TaskList) {
