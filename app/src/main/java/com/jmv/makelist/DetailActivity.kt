@@ -1,6 +1,7 @@
 package com.jmv.makelist
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
 
         //create an Intent
         val intent = Intent()
+       // intent.putExtra(MainActivity.INTENT_LIST_KEY, list)
         intent.putExtras(bundle)
         setResult(Activity.RESULT_OK, intent)
         //super goes last for this method
@@ -54,12 +56,19 @@ class DetailActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(R.string.task_to_add)
             .setView(taskEditText)
-            .setPositiveButton(R.string.add_task) {
+            .setPositiveButton(R.string.add_task, object : DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    val task = taskEditText.text.toString()
+                    list.tasks.add(task)
+                    p0?.dismiss()
+                }
+            })
+            /*.setPositiveButton(R.string.add_task) {
                     dialog, _ ->
                 val task = taskEditText.text.toString()
                 list.tasks.add(task)
                 dialog.dismiss()
-            }
+            }*/
             .create()
             .show()
 
